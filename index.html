@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solana dApp</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: slideIn 1s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 1rem;
+      animation: rotate 5s infinite linear;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    button {
+      background: #00ff88;
+      color: #1e3c72;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background: #00cc66;
+      transform: scale(1.05);
+    }
+
+    #wallet-info {
+      margin-top: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #wallet-info.visible {
+      opacity: 1;
+    }
+
+    #wallet-info p {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+      }
+
+      button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/flufflogo.png" alt="Logo" class="logo" />
+    <h1>Solana dApp</h1>
+    <button id="connect-wallet">Connect Wallet</button>
+    <div id="wallet-info">
+      <p><strong>Wallet Address:</strong> <span id="wallet-address">Not connected</span></p>
+      <p><strong>Balance:</strong> <span id="wallet-balance">0 SOL</span></p>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+  <script>
+    // Initialize Solana connection
+    const solanaNetwork = "https://api.devnet.solana.com"; // Use Devnet for testing
+    const connection = new solanaWeb3.Connection(solanaNetwork);
+
+    // DOM elements
+    const connectWalletButton = document.getElementById("connect-wallet");
+    const walletAddressSpan = document.getElementById("wallet-address");
+    const walletBalanceSpan = document.getElementById("wallet-balance");
+    const walletInfoDiv = document.getElementById("wallet-info");
+
+    // Connect wallet
+    connectWalletButton.addEventListener("click", async () => {
+      if (!window.solana || !window.solana.isPhantom) {
+        alert("Phantom wallet not found! Please install Phantom.");
+        return;
+      }
+
+      try {
+        // Connect to Phantom wallet
+        const wallet = window.solana;
+        await wallet.connect();
+        const publicKey = wallet.publicKey.toString();
+        walletAddressSpan.textContent = publicKey;
+
+        // Get wallet balance
+        const balance = await connection.getBalance(wallet.publicKey);
+        walletBalanceSpan.textContent = (balance / solanaWeb3.LAMPORTS_PER_SOL).toFixed(2) + " SOL";
+
+        // Show wallet info with smooth transition
+        walletInfoDiv.classList.add("visible");
+      } catch (error) {
+        console.error("Error connecting wallet:", error);
+        alert("Failed to connect wallet.");
+      }
+    });
+  </script>
+</body>
+</html>
