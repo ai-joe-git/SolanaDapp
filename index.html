@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Solana dApp</title>
+  <title>Solana Fans</title>
   <style>
     /* Global Styles */
     * {
@@ -14,126 +14,186 @@
 
     body {
       font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      background: #0f0f0f; /* Dark background */
       color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow: hidden;
+      line-height: 1.6;
     }
 
     .container {
-      text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 2rem;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 1.5s ease-in-out;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      border-bottom: 1px solid #333;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      animation: slideIn 1s ease-in-out;
+    header h1 {
+      font-size: 24px;
+      font-weight: bold;
     }
 
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+    header button {
+      background: #00ff88;
+      color: #0f0f0f;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    .logo {
+    header button:hover {
+      background: #00cc66;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .profile-section img {
       width: 100px;
       height: 100px;
-      margin-bottom: 1rem;
-      animation: rotate 5s infinite linear;
+      border-radius: 50%;
+      margin-right: 20px;
     }
 
-    @keyframes rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
+    .profile-section h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
     }
 
-    button {
-      background: #00ff88;
-      color: #1e3c72;
-      border: none;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-      margin-top: 1rem;
+    .profile-section p {
+      color: #aaa;
     }
 
-    button:hover {
-      background: #00cc66;
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .content-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .content-card:hover {
       transform: scale(1.05);
     }
 
-    #wallet-info {
-      margin-top: 1.5rem;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
+    .content-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
     }
 
-    #wallet-info.visible {
-      opacity: 1;
+    .content-card h3 {
+      padding: 10px;
+      font-size: 18px;
     }
 
-    #wallet-info p {
-      font-size: 1.1rem;
-      margin: 0.5rem 0;
+    .content-card p {
+      padding: 0 10px 10px;
+      color: #aaa;
     }
 
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2rem;
-      }
+    .subscription-section {
+      margin-top: 20px;
+    }
 
-      .container {
-        padding: 1.5rem;
-      }
+    .subscription-section input {
+      padding: 10px;
+      width: 200px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background: #1a1a1a;
+      color: #fff;
+      margin-right: 10px;
+    }
 
-      button {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-      }
+    .subscription-section button {
+      background: #00ff88;
+      color: #0f0f0f;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .subscription-section button:hover {
+      background: #00cc66;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="/flufflogo.png" alt="Logo" class="logo" />
-    <h1>Solana dApp</h1>
-    <button id="connect-wallet">Connect Wallet</button>
-    <div id="wallet-info">
-      <p><strong>Wallet Address:</strong> <span id="wallet-address">Not connected</span></p>
-      <p><strong>Balance:</strong> <span id="wallet-balance">0 SOL</span></p>
+    <!-- Header -->
+    <header>
+      <h1>Solana Fans</h1>
+      <button id="connect-wallet">Connect Wallet</button>
+    </header>
+
+    <!-- Wallet Info -->
+    <div id="wallet-info" class="hidden">
+      <p><strong>Wallet Address:</strong> <span id="wallet-address"></span></p>
+      <p><strong>Balance:</strong> <span id="wallet-balance"></span></p>
+    </div>
+
+    <!-- Creator Profile Section -->
+    <div id="creator-section" class="hidden">
+      <div class="profile-section">
+        <img src="https://via.placeholder.com/100" alt="Creator Profile" />
+        <div>
+          <h2>Creator Name</h2>
+          <p>Welcome back! Set your subscription fee and upload content.</p>
+        </div>
+      </div>
+      <div class="subscription-section">
+        <input type="number" id="subscription-fee" placeholder="Subscription Fee (SOL)" min="0.01" step="0.01" />
+        <button id="set-fee">Set Fee</button>
+        <p id="fee-status"></p>
+      </div>
+    </div>
+
+    <!-- Follower Feed Section -->
+    <div id="follower-section" class="hidden">
+      <div class="profile-section">
+        <img src="https://via.placeholder.com/100" alt="Follower Profile" />
+        <div>
+          <h2>Welcome, Follower!</h2>
+          <p>Subscribe to your favorite creators and access exclusive content.</p>
+        </div>
+      </div>
+      <div class="subscription-section">
+        <input type="text" id="creator-address" placeholder="Creator's Wallet Address" />
+        <button id="subscribe">Subscribe</button>
+        <p id="subscription-status"></p>
+      </div>
+      <div class="content-grid">
+        <div class="content-card">
+          <img src="https://via.placeholder.com/300" alt="Content" />
+          <h3>Exclusive Content</h3>
+          <p>Unlock this content by subscribing.</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -148,6 +208,17 @@
     const walletAddressSpan = document.getElementById("wallet-address");
     const walletBalanceSpan = document.getElementById("wallet-balance");
     const walletInfoDiv = document.getElementById("wallet-info");
+    const creatorSection = document.getElementById("creator-section");
+    const followerSection = document.getElementById("follower-section");
+    const subscriptionFeeInput = document.getElementById("subscription-fee");
+    const setFeeButton = document.getElementById("set-fee");
+    const feeStatus = document.getElementById("fee-status");
+    const creatorAddressInput = document.getElementById("creator-address");
+    const subscribeButton = document.getElementById("subscribe");
+    const subscriptionStatus = document.getElementById("subscription-status");
+
+    // Platform wallet address (replace with your address)
+    const platformWalletAddress = "YOUR_PLATFORM_WALLET_ADDRESS";
 
     // Connect wallet
     connectWalletButton.addEventListener("click", async () => {
@@ -157,21 +228,75 @@
       }
 
       try {
-        // Connect to Phantom wallet
         const wallet = window.solana;
         await wallet.connect();
         const publicKey = wallet.publicKey.toString();
         walletAddressSpan.textContent = publicKey;
 
-        // Get wallet balance
         const balance = await connection.getBalance(wallet.publicKey);
         walletBalanceSpan.textContent = (balance / solanaWeb3.LAMPORTS_PER_SOL).toFixed(2) + " SOL";
 
-        // Show wallet info with smooth transition
-        walletInfoDiv.classList.add("visible");
+        walletInfoDiv.classList.remove("hidden");
+
+        // Show creator or follower section based on user role
+        const isCreator = confirm("Are you a creator? (Cancel for follower)");
+        if (isCreator) {
+          creatorSection.classList.remove("hidden");
+        } else {
+          followerSection.classList.remove("hidden");
+        }
       } catch (error) {
         console.error("Error connecting wallet:", error);
         alert("Failed to connect wallet.");
+      }
+    });
+
+    // Set subscription fee (creator)
+    setFeeButton.addEventListener("click", () => {
+      const fee = parseFloat(subscriptionFeeInput.value);
+      if (isNaN(fee) || fee <= 0) {
+        alert("Please enter a valid fee.");
+        return;
+      }
+
+      feeStatus.textContent = `Subscription fee set to ${fee} SOL.`;
+    });
+
+    // Subscribe to creator (follower)
+    subscribeButton.addEventListener("click", async () => {
+      const creatorAddress = creatorAddressInput.value;
+      const fee = parseFloat(subscriptionFeeInput.value || "0.01"); // Default fee
+
+      if (!creatorAddress || !solanaWeb3.PublicKey.isOnCurve(creatorAddress)) {
+        alert("Please enter a valid creator wallet address.");
+        return;
+      }
+
+      try {
+        subscriptionStatus.textContent = "Processing subscription...";
+
+        const wallet = window.solana;
+        const transaction = new solanaWeb3.Transaction().add(
+          solanaWeb3.SystemProgram.transfer({
+            fromPubkey: wallet.publicKey,
+            toPubkey: new solanaWeb3.PublicKey(creatorAddress),
+            lamports: fee * solanaWeb3.LAMPORTS_PER_SOL * 0.7, // 70% to creator
+          }),
+          solanaWeb3.SystemProgram.transfer({
+            fromPubkey: wallet.publicKey,
+            toPubkey: new solanaWeb3.PublicKey(platformWalletAddress),
+            lamports: fee * solanaWeb3.LAMPORTS_PER_SOL * 0.3, // 30% to platform
+          })
+        );
+
+        // Sign and send the transaction
+        const signature = await wallet.signAndSendTransaction(transaction);
+        await connection.confirmTransaction(signature);
+
+        subscriptionStatus.textContent = "Subscription successful!";
+      } catch (error) {
+        console.error("Error subscribing:", error);
+        subscriptionStatus.textContent = "Failed to subscribe.";
       }
     });
   </script>
